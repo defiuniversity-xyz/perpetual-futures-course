@@ -4,6 +4,15 @@ lesson_number: 8
 course: perpetual-futures
 ---
 
+
+## 🎧 Lesson Podcast
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-08/audio/lesson8_Finding_Your_Perfect_Decentralized_Perpetual_Protocol.m4a" %}
+
+## 🎬 Video Overview
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-08/video/lesson8_DeFi_Protocol_Playbook.mp4" %}
+
 # Lesson 8: Alternative Chain Protocols
 
 

@@ -4,6 +4,15 @@ lesson_number: 10
 course: perpetual-futures
 ---
 
+
+## 🎧 Lesson Podcast
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-10/audio/lesson10_Structured_Risk_Management_for_DeFi_Leverage.m4a" %}
+
+## 🎬 Video Overview
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-10/video/lesson10_Trading_s_Unseen_Enemy.mp4" %}
+
 # Lesson 10: Risk Management and Position Protection
 
 

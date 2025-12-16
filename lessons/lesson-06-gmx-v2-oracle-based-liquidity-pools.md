@@ -4,6 +4,15 @@ lesson_number: 6
 course: perpetual-futures
 ---
 
+
+## 🎧 Lesson Podcast
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-06/audio/lesson6_GMX_V2_Isolated_Pools_Risk_and_Fees.m4a" %}
+
+## 🎬 Video Overview
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-06/video/lesson6_GMX_V2__Future_of_Trading_.mp4" %}
+
 # Lesson 6: GMX V2 - Oracle-Based Liquidity Pools
 
 ## 🎯 Core Concept: Zero Slippage Through Oracle Pricing

@@ -7,11 +7,11 @@ course: perpetual-futures
 
 ## 🎧 Lesson Podcast
 
-{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-03/audio/lesson3%20Decentralized_Perpetual_Exchange_Architecture_Explained.m4a" %}
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-03/audio/lesson3_Decentralized_Perpetual_Exchange_Architecture_Explained.m4a" %}
 
 ## 🎬 Video Overview
 
-{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-03/video/lesson3%20Choosing_Your_Trading_Arena.mp4" %}
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-03/video/lesson3_Choosing_Your_Trading_Arena.mp4" %}
 
 # Lesson 3: Architecture Types and Market Structure
 

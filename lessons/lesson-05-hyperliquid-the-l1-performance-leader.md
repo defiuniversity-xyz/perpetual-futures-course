@@ -4,6 +4,15 @@ lesson_number: 5
 course: perpetual-futures
 ---
 
+
+## 🎧 Lesson Podcast
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-05/audio/lesson5_Hyperliquid_Speed_Trust_and_Hidden_Risks.m4a" %}
+
+## 🎬 Video Overview
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-05/video/lesson5_The_Explainer__Hyperliquid.mp4" %}
+
 # Lesson 5: Hyperliquid - The L1 Performance Leader
 
 ## 🎯 Core Concept: Purpose-Built for Trading

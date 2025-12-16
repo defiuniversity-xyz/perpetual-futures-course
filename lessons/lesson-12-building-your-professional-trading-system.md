@@ -74,11 +74,11 @@ Professional traders don't rely on luck or intuition—they build systematic fra
 |------
 ## 🎧 Lesson Podcast
 
-{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-12/audio/lesson12%20Trading_Futures_Systems_Over_Trades.m4a" %}
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-12/audio/lesson12_Trading_Futures_Systems_Over_Trades.m4a" %}
 
 ## 🎬 Video Overview
 
-{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-12/video/lesson12%20Pro_Trading_System.mp4" %}
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-12/video/lesson12_Pro_Trading_System.mp4" %}
 
 ----|--------|--------------|----------------|
 | Security | 40% | ___ | ___ |

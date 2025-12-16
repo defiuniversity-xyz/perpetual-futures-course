@@ -4,6 +4,15 @@ lesson_number: 4
 course: perpetual-futures
 ---
 
+
+## 🎧 Lesson Podcast
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-04/audio/lesson4_Perpetual_Trading_First_Trade_Safety_Checklist.m4a" %}
+
+## 🎬 Video Overview
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-04/video/lesson4_Your_First_Perpetuals_Trade.mp4" %}
+
 # Lesson 4: Your First Perpetual Position
 
 ## 🎯 Core Concept: Start Simple, Start Safe

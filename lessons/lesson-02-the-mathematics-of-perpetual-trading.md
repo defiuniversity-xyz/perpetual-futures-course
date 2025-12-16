@@ -4,6 +4,15 @@ lesson_number: 2
 course: perpetual-futures
 ---
 
+
+## 🎧 Lesson Podcast
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-02/audio/lesson2_Perpetual_Futures_Math_Your_Primary_Defense_Against_Losses.m4a" %}
+
+## 🎬 Video Overview
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-02/video/lesson2_The_Math_of_Perpetual_Trading.mp4" %}
+
 # Lesson 2: The Mathematics of Perpetual Trading
 
 ## 🎯 Core Concept: Math is Your Protection

@@ -4,6 +4,15 @@ lesson_number: 9
 course: perpetual-futures
 ---
 
+
+## 🎧 Lesson Podcast
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-09/audio/lesson9_Funding_Rate_Arbitrage_Delta_Neutral_Farming.m4a" %}
+
+## 🎬 Video Overview
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-09/video/lesson9_Funding_Rate_Arbitrage.mp4" %}
+
 # Lesson 9: Funding Rate Arbitrage Strategies
 
 ## 🎯 Core Concept: Capturing Funding Rates Without Price Risk

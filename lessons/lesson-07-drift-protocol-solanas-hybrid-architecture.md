@@ -4,6 +4,15 @@ lesson_number: 7
 course: perpetual-futures
 ---
 
+
+## 🎧 Lesson Podcast
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-07/audio/lesson7_Drift_Protocol_Third_Generation_DeFi_Hybrid_Architecture.m4a" %}
+
+## 🎬 Video Overview
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-07/video/lesson7_Drift__Solving_Trader_s_Dilemma.mp4" %}
+
 # Lesson 7: Drift Protocol - Solana's Hybrid Architecture
 
 ## 🎯 Core Concept: The Liquidity Trifecta
