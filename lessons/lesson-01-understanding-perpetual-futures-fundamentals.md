@@ -4,6 +4,15 @@ lesson_number: 1
 course: perpetual-futures
 ---
 
+
+## 🎧 Lesson Podcast
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-01/audio/lesson1%20Mastering_DeFi_Perpetual_Futures_Trading_Risk.m4a" %}
+
+## 🎬 Video Overview
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-01/video/Lesson1%20What_Are_Perpetual_Futures_.mp4" %}
+
 # Lesson 1: Understanding Perpetual Futures Fundamentals
 
 ## 🎯 Core Concept: What is a Perpetual Future?

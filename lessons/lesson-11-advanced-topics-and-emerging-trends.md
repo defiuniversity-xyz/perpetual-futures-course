@@ -4,6 +4,15 @@ lesson_number: 11
 course: perpetual-futures
 ---
 
+
+## 🎧 Lesson Podcast
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-11/audio/lesson11%20Designing_Robust_Modern_DeFi_Trading_Systems.m4a" %}
+
+## 🎬 Video Overview
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-11/video/lesson11%20The_Future_of_On-Chain_Trading.mp4" %}
+
 # Lesson 11: Advanced Topics and Emerging Trends
 
 ## 🎯 Core Concept: The Future of Perpetual Trading

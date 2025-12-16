@@ -71,7 +71,16 @@ Professional traders don't rely on luck or intuition—they build systematic fra
 **Create Your Own**:
 
 | Category | Weight | Score (1-10) | Weighted Score |
-|----------|--------|--------------|----------------|
+|------
+## 🎧 Lesson Podcast
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-12/audio/lesson12%20Trading_Futures_Systems_Over_Trades.m4a" %}
+
+## 🎬 Video Overview
+
+{% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-12/video/lesson12%20Pro_Trading_System.mp4" %}
+
+----|--------|--------------|----------------|
 | Security | 40% | ___ | ___ |
 | Economics | 30% | ___ | ___ |
 | Technical | 20% | ___ | ___ |
