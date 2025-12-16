@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Funding Rate Calculator - DeFi University</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDuGdDF6jYPcZbQTpbGZPwnl3Qynr-LMWc",
+            authDomain: "defi-university-prod.firebaseapp.com",
+            projectId: "defi-university-prod",
+            storageBucket: "defi-university-prod.firebasestorage.app",
+            messagingSenderId: "309871336262",
+            appId: "1:309871336262:web:d2dc4be5729ac1d5a6a347"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        let userToken = null;
+        let tracked = false;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) userToken = await user.getIdToken();
+        });
+
+        window.calculate = async function() {
+            const positionSize = parseFloat(document.getElementById('position-size').value);
+            const direction = document.getElementById('direction').value;
+            const fundingRate = parseFloat(document.getElementById('funding-rate').value) / 100;
+            const frequency = parseInt(document.getElementById('frequency').value);
+            const margin = parseFloat(document.getElementById('margin').value);
+
+            if (!positionSize || !margin) { alert('Please fill in all fields'); return; }
+
+            const periodsPerDay = 24 / frequency;
+            const periodPayment = positionSize * fundingRate;
+            const dailyCost = periodPayment * periodsPerDay;
+            const annualizedRate = fundingRate * periodsPerDay * 365 * 100;
+            const dailyMarginPct = (dailyCost / margin) * 100;
+            const breakevenMove = dailyCost / positionSize * 100;
+
+            const isPaying = (direction === 'long' && fundingRate > 0) || (direction === 'short' && fundingRate < 0);
+            const displayEl = document.getElementById('funding-display');
+            displayEl.className = isPaying ? 'funding-display funding-positive' : 'funding-display funding-negative';
+
+            document.getElementById('annualized-rate').textContent = `${annualizedRate.toFixed(1)}%`;
+            document.getElementById('annualized-rate').className = 'text-4xl font-bold ' + (isPaying ? 'text-red-600' : 'text-green-600');
+
+            const dirEl = document.getElementById('funding-direction');
+            if (isPaying) {
+                dirEl.textContent = `📤 You PAY funding`;
+                dirEl.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-600';
+            } else {
+                dirEl.textContent = `📥 You RECEIVE funding`;
+                dirEl.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-600';
+            }
+
+            const sign = isPaying ? '-' : '+';
+            document.getElementById('period-payment').textContent = `${sign}$${Math.abs(periodPayment).toFixed(2)}`;
+            document.getElementById('period-payment').className = 'text-lg font-semibold ' + (isPaying ? 'text-red-600' : 'text-green-600');
+            document.getElementById('daily-cost').textContent = `${sign}$${Math.abs(dailyCost).toFixed(2)}/day`;
+            document.getElementById('daily-cost').className = 'text-lg font-semibold ' + (isPaying ? 'text-red-600' : 'text-green-600');
+            document.getElementById('daily-margin-pct').textContent = `${sign}${dailyMarginPct.toFixed(2)}%`;
+            document.getElementById('breakeven').textContent = `${breakevenMove.toFixed(3)}% per day`;
+
+            const periods = [
+                { label: '1 Day', days: 1 },
+                { label: '7 Days', days: 7 },
+                { label: '30 Days', days: 30 },
+                { label: '1 Year', days: 365 }
+            ];
+            const timelineHtml = periods.map(p => {
+                const cost = dailyCost * p.days;
+                const pct = (cost / margin) * 100;
+                return `<div class="text-center p-4 bg-white border border-neutral-200 rounded-lg"><div class="text-xs text-neutral-500 mb-1">${p.label}</div><div class="text-lg font-semibold ${isPaying ? 'text-red-600' : 'text-green-600'}">${sign}$${Math.abs(cost).toFixed(0)}</div><div class="text-xs text-neutral-500">${sign}${Math.abs(pct).toFixed(1)}% margin</div></div>`;
+            }).join('');
+            document.getElementById('timeline-grid').innerHTML = timelineHtml;
+
+            const warningBox = document.getElementById('warning-box');
+            if (annualizedRate > 50 && isPaying) {
+                warningBox.classList.remove('hidden');
+                document.getElementById('warning-text').textContent = `At ${annualizedRate.toFixed(1)}% APR, you'll lose ${dailyMarginPct.toFixed(1)}% of your margin daily just to funding. Price must move ${breakevenMove.toFixed(3)}% in your favor each day just to break even. Consider closing or using spot instead.`;
+            } else {
+                warningBox.classList.add('hidden');
+            }
+
+            document.getElementById('results').classList.remove('hidden');
+
+            if (!tracked && userToken) {
+                tracked = true;
+                try {
+                    const response = await fetch('https://api.defiuniversity.xyz/api/progress/interaction', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${userToken}` },
+                        body: JSON.stringify({ courseId: 'perpetual-futures', interactionId: 'funding-rate-calculator', type: 'calculator' })
+                    });
+                    if (response.ok) {
+                        const badge = document.getElementById('points-badge');
+                        badge.classList.add('show');
+                        setTimeout(() => badge.classList.remove('show'), 2500);
+                    }
+                } catch (e) { console.error('Tracking error:', e); }
+            }
+        };
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+        }
+        h1, h2, h3, h4, .brand-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        #points-badge {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        #points-badge.show { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+    </style>
+</head>
+<body class="bg-white text-neutral-900 min-h-screen p-4 md:p-8">
+    <div class="max-w-3xl mx-auto relative">
+        <div id="points-badge" class="absolute top-0 right-0 bg-blue-50 border border-blue-200 text-blue-600 px-4 py-2 rounded-full text-sm font-semibold">
+            +25 pts earned!
+        </div>
+        
+        <!-- Header -->
+        <div class="text-center mb-8 bg-white border border-neutral-200 rounded-xl p-6 shadow-sm">
+            <h1 class="text-2xl font-semibold text-neutral-900 brand-font mb-2">💸 Funding Rate Calculator</h1>
+            <p class="text-neutral-500 text-sm">Calculate funding payments and annualized funding costs</p>
+        </div>
+        
+        <!-- Calculator -->
+        <div class="bg-white border border-neutral-200 rounded-xl p-6 shadow-sm">
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Position Size ($)</label>
+                        <input type="number" id="position-size" placeholder="e.g., 10000" step="100" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Position Direction</label>
+                        <select id="direction" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900 bg-white">
+                            <option value="long">Long</option>
+                            <option value="short">Short</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Funding Rate (%)</label>
+                        <input type="number" id="funding-rate" placeholder="e.g., 0.01" step="0.001" value="0.01" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Funding Frequency</label>
+                        <select id="frequency" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900 bg-white">
+                            <option value="1">Every 1 hour</option>
+                            <option value="8" selected>Every 8 hours</option>
+                            <option value="24">Every 24 hours</option>
+                        </select>
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-2">Margin Deposited ($)</label>
+                    <input type="number" id="margin" placeholder="e.g., 2000" step="100" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900">
+                </div>
+                <button onclick="calculate()" class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-blue-600/20">
+                    Calculate Funding Impact
+                </button>
+            </div>
+            
+            <!-- Results -->
+            <div id="results" class="hidden mt-6 pt-6 border-t border-neutral-200 space-y-4">
+                <div class="text-center p-6 rounded-xl" id="funding-display">
+                    <div class="text-4xl font-bold mb-2" id="annualized-rate">-</div>
+                    <div class="text-sm text-neutral-500 mb-3">Annualized Funding Rate</div>
+                    <div id="funding-direction" class="inline-block">-</div>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Per-Period Payment</span>
+                        <span class="text-lg font-semibold" id="period-payment">-</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Daily Funding Cost</span>
+                        <span class="text-lg font-semibold" id="daily-cost">-</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Daily % of Margin</span>
+                        <span class="text-lg font-semibold" id="daily-margin-pct">-</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Break-Even Price Move</span>
+                        <span class="text-lg font-semibold" id="breakeven">-</span>
+                    </div>
+                </div>
+                <div class="mt-6 p-4 bg-white border border-neutral-200 rounded-xl">
+                    <div class="text-sm font-semibold text-neutral-900 mb-4">📅 Cumulative Funding Costs Over Time</div>
+                    <div class="grid grid-cols-2 md:grid-cols-4 gap-3" id="timeline-grid"></div>
+                </div>
+                <div class="hidden p-4 bg-orange-50 border border-orange-200 rounded-lg" id="warning-box">
+                    <h4 class="text-orange-600 font-semibold mb-2">⚠️ High Funding Rate Warning</h4>
+                    <p class="text-sm text-orange-800" id="warning-text">-</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

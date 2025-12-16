@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Leverage & Liquidation Calculator - DeFi University</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDuGdDF6jYPcZbQTpbGZPwnl3Qynr-LMWc",
+            authDomain: "defi-university-prod.firebaseapp.com",
+            projectId: "defi-university-prod",
+            storageBucket: "defi-university-prod.firebasestorage.app",
+            messagingSenderId: "309871336262",
+            appId: "1:309871336262:web:d2dc4be5729ac1d5a6a347"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        let userToken = null;
+        let tracked = false;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) userToken = await user.getIdToken();
+        });
+
+        window.calculate = async function() {
+            const direction = document.getElementById('direction').value;
+            const entryPrice = parseFloat(document.getElementById('entry-price').value);
+            const margin = parseFloat(document.getElementById('margin').value);
+            const leverage = parseFloat(document.getElementById('leverage').value);
+            const maintenanceMargin = parseFloat(document.getElementById('maintenance-margin').value) / 100;
+
+            if (!entryPrice || !margin) { alert('Please fill in all fields'); return; }
+
+            const positionSize = margin * leverage;
+            const marginRatio = 1 / leverage;
+            
+            let liquidationPrice;
+            if (direction === 'long') {
+                liquidationPrice = entryPrice * (1 - marginRatio + maintenanceMargin);
+            } else {
+                liquidationPrice = entryPrice * (1 + marginRatio - maintenanceMargin);
+            }
+
+            const moveToLiq = Math.abs((liquidationPrice - entryPrice) / entryPrice) * 100;
+            const safetyBuffer = moveToLiq;
+
+            document.getElementById('liq-price').textContent = `$${liquidationPrice.toFixed(2)}`;
+            document.getElementById('position-size').textContent = `$${positionSize.toLocaleString()}`;
+            document.getElementById('initial-margin').textContent = `$${margin.toLocaleString()} (${(marginRatio * 100).toFixed(1)}%)`;
+            document.getElementById('effective-leverage').textContent = `${leverage}x`;
+            document.getElementById('move-to-liq').textContent = `${moveToLiq.toFixed(1)}% ${direction === 'long' ? 'down' : 'up'}`;
+            document.getElementById('safety-buffer').textContent = `${safetyBuffer.toFixed(1)}%`;
+
+            const statusEl = document.getElementById('risk-status');
+            if (safetyBuffer >= 20) { statusEl.textContent = '✅ Safe Buffer'; statusEl.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-green-50 text-green-600'; }
+            else if (safetyBuffer >= 10) { statusEl.textContent = '⚠️ Moderate Risk'; statusEl.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-orange-50 text-orange-600'; }
+            else { statusEl.textContent = '🚨 High Risk'; statusEl.className = 'px-3 py-1 rounded-full text-xs font-semibold bg-red-50 text-red-600'; }
+
+            const moves = direction === 'long' ? [-10, -5, 5, 10, 20] : [10, 5, -5, -10, -20];
+            const scenarioHtml = moves.map(move => {
+                const pnlPercent = move * leverage;
+                const pnlDollars = margin * (pnlPercent / 100);
+                const isProfit = (direction === 'long' && move > 0) || (direction === 'short' && move < 0);
+                const color = isProfit ? '#22c55e' : '#ef4444';
+                const sign = pnlDollars >= 0 ? '+' : '';
+                return `<div class="text-center p-4 bg-white border border-neutral-200 rounded-lg"><div class="text-xs text-neutral-500 mb-1">${move > 0 ? '+' : ''}${move}% price</div><div class="text-lg font-semibold" style="color: ${color}">${sign}$${pnlDollars.toFixed(0)}</div><div class="text-xs text-neutral-500">${sign}${pnlPercent.toFixed(0)}% ROI</div></div>`;
+            }).join('');
+            document.getElementById('scenario-grid').innerHTML = scenarioHtml;
+
+            document.getElementById('results').classList.remove('hidden');
+
+            if (!tracked && userToken) {
+                tracked = true;
+                try {
+                    const response = await fetch('https://api.defiuniversity.xyz/api/progress/interaction', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${userToken}` },
+                        body: JSON.stringify({ courseId: 'perpetual-futures', interactionId: 'leverage-calculator', type: 'calculator' })
+                    });
+                    if (response.ok) {
+                        const badge = document.getElementById('points-badge');
+                        badge.classList.add('show');
+                        setTimeout(() => badge.classList.remove('show'), 2500);
+                    }
+                } catch (e) { console.error('Tracking error:', e); }
+            }
+        };
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+        }
+        h1, h2, h3, h4, .brand-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        #points-badge {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        #points-badge.show { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+    </style>
+</head>
+<body class="bg-white text-neutral-900 min-h-screen p-4 md:p-8">
+    <div class="max-w-3xl mx-auto relative">
+        <div id="points-badge" class="absolute top-0 right-0 bg-blue-50 border border-blue-200 text-blue-600 px-4 py-2 rounded-full text-sm font-semibold">
+            +25 pts earned!
+        </div>
+        
+        <!-- Header -->
+        <div class="text-center mb-8 bg-white border border-neutral-200 rounded-xl p-6 shadow-sm">
+            <h1 class="text-2xl font-semibold text-neutral-900 brand-font mb-2">📊 Leverage & Liquidation Calculator</h1>
+            <p class="text-neutral-500 text-sm">Calculate position size, liquidation price, and P&L scenarios</p>
+        </div>
+        
+        <!-- Calculator -->
+        <div class="bg-white border border-neutral-200 rounded-xl p-6 shadow-sm">
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-sm font-medium text-neutral-700 mb-2">Position Direction</label>
+                    <select id="direction" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900 bg-white">
+                        <option value="long">Long (Betting price goes up)</option>
+                        <option value="short">Short (Betting price goes down)</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Entry Price ($)</label>
+                        <input type="number" id="entry-price" placeholder="e.g., 2500" step="0.01" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Margin ($)</label>
+                        <input type="number" id="margin" placeholder="e.g., 1000" step="0.01" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Leverage</label>
+                        <select id="leverage" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900 bg-white">
+                            <option value="2">2x</option>
+                            <option value="3">3x</option>
+                            <option value="5" selected>5x</option>
+                            <option value="10">10x</option>
+                            <option value="20">20x</option>
+                            <option value="50">50x</option>
+                        </select>
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Maintenance Margin (%)</label>
+                        <input type="number" id="maintenance-margin" value="0.5" step="0.1" placeholder="e.g., 0.5" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900">
+                    </div>
+                </div>
+                <button onclick="calculate()" class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-blue-600/20">
+                    Calculate Position
+                </button>
+            </div>
+            
+            <!-- Results -->
+            <div id="results" class="hidden mt-6 pt-6 border-t border-neutral-200 space-y-4">
+                <div class="text-center p-6 bg-blue-50 border border-blue-200 rounded-xl">
+                    <div class="text-4xl font-bold text-blue-600 mb-2" id="liq-price">-</div>
+                    <div class="text-sm text-blue-800 mb-3">Liquidation Price</div>
+                    <div id="risk-status" class="inline-block">-</div>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Position Size</span>
+                        <span class="text-neutral-900 font-semibold" id="position-size">-</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Initial Margin</span>
+                        <span class="text-neutral-900 font-semibold" id="initial-margin">-</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Effective Leverage</span>
+                        <span class="text-neutral-900 font-semibold" id="effective-leverage">-</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Price Move to Liquidation</span>
+                        <span class="text-neutral-900 font-semibold" id="move-to-liq">-</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Safety Buffer</span>
+                        <span class="text-neutral-900 font-semibold" id="safety-buffer">-</span>
+                    </div>
+                </div>
+                <div class="mt-6 p-4 bg-white border border-neutral-200 rounded-xl">
+                    <div class="text-sm font-semibold text-neutral-900 mb-4">💰 P&L at Different Price Moves</div>
+                    <div class="grid grid-cols-3 md:grid-cols-5 gap-3" id="scenario-grid"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

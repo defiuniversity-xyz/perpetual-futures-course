@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delta-Neutral Builder - DeFi University</title>
+    
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600&family=Inter:wght@300;400;500&display=swap" rel="stylesheet">
+    
+    <!-- Firebase SDK -->
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-app.js';
+        import { getAuth, onAuthStateChanged } from 'https://www.gstatic.com/firebasejs/10.7.1/firebase-auth.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyDuGdDF6jYPcZbQTpbGZPwnl3Qynr-LMWc",
+            authDomain: "defi-university-prod.firebaseapp.com",
+            projectId: "defi-university-prod",
+            storageBucket: "defi-university-prod.firebasestorage.app",
+            messagingSenderId: "309871336262",
+            appId: "1:309871336262:web:d2dc4be5729ac1d5a6a347"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        let userToken = null;
+        let tracked = false;
+
+        onAuthStateChanged(auth, async (user) => {
+            if (user) userToken = await user.getIdToken();
+        });
+
+        window.calculate = async function() {
+            const capital = parseFloat(document.getElementById('capital').value);
+            const asset = document.getElementById('asset').value;
+            const price = parseFloat(document.getElementById('price').value);
+            const fundingRate = parseFloat(document.getElementById('funding-rate').value) / 100;
+            const tradingFee = parseFloat(document.getElementById('trading-fee').value) / 100;
+            const swapFee = parseFloat(document.getElementById('swap-fee').value) / 100;
+
+            if (!capital || !price) { alert('Please fill in all fields'); return; }
+
+            // Split capital: 50% for spot, 50% for perp margin
+            const spotAllocation = capital / 2;
+            const perpAllocation = capital / 2;
+
+            const spotFee = spotAllocation * swapFee;
+            const spotNetValue = spotAllocation - spotFee;
+            const spotAmount = spotNetValue / price;
+
+            // Perp: 1x leverage, notional = margin
+            const perpNotional = perpAllocation;
+            const perpFeeEntry = perpNotional * tradingFee;
+
+            // Funding: 3 periods per day
+            const periodsPerDay = 3;
+            const dailyFunding = perpNotional * fundingRate * periodsPerDay;
+            const monthlyFunding = dailyFunding * 30;
+            const annualYield = (dailyFunding * 365) / capital * 100;
+
+            const totalEntryCosts = spotFee + perpFeeEntry;
+            const breakevenDays = totalEntryCosts / dailyFunding;
+
+            document.getElementById('annual-yield').textContent = `${annualYield.toFixed(1)}%`;
+            document.getElementById('spot-amount').textContent = `${spotAmount.toFixed(4)} ${asset}`;
+            document.getElementById('spot-value').textContent = `$${spotNetValue.toFixed(2)}`;
+            document.getElementById('spot-fee').textContent = `-$${spotFee.toFixed(2)}`;
+            document.getElementById('perp-notional').textContent = `$${perpNotional.toFixed(2)}`;
+            document.getElementById('perp-margin').textContent = `$${perpAllocation.toFixed(2)}`;
+            document.getElementById('perp-fee').textContent = `-$${perpFeeEntry.toFixed(2)}`;
+            document.getElementById('net-delta').textContent = '≈ 0 (Neutral)';
+            document.getElementById('daily-funding').textContent = `+$${dailyFunding.toFixed(2)}/day`;
+            document.getElementById('daily-funding').className = 'text-lg font-semibold text-green-600';
+            document.getElementById('monthly-funding').textContent = `+$${monthlyFunding.toFixed(2)}/mo`;
+            document.getElementById('monthly-funding').className = 'text-lg font-semibold text-green-600';
+            document.getElementById('total-entry-costs').textContent = `-$${totalEntryCosts.toFixed(2)}`;
+            document.getElementById('breakeven-days').textContent = `${breakevenDays.toFixed(1)} days`;
+
+            document.getElementById('results').classList.remove('hidden');
+
+            if (!tracked && userToken) {
+                tracked = true;
+                try {
+                    const response = await fetch('https://api.defiuniversity.xyz/api/progress/interaction', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${userToken}` },
+                        body: JSON.stringify({ courseId: 'perpetual-futures', interactionId: 'delta-neutral-builder', type: 'calculator' })
+                    });
+                    if (response.ok) {
+                        const badge = document.getElementById('points-badge');
+                        badge.classList.add('show');
+                        setTimeout(() => badge.classList.remove('show'), 2500);
+                    }
+                } catch (e) { console.error('Tracking error:', e); }
+            }
+        };
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+        }
+        h1, h2, h3, h4, .brand-font {
+            font-family: 'Space Grotesk', sans-serif;
+        }
+        
+        #points-badge {
+            opacity: 0;
+            transform: translateY(-10px);
+            transition: all 0.3s ease;
+        }
+        #points-badge.show { 
+            opacity: 1; 
+            transform: translateY(0); 
+        }
+    </style>
+</head>
+<body class="bg-white text-neutral-900 min-h-screen p-4 md:p-8">
+    <div class="max-w-3xl mx-auto relative">
+        <div id="points-badge" class="absolute top-0 right-0 bg-blue-50 border border-blue-200 text-blue-600 px-4 py-2 rounded-full text-sm font-semibold">
+            +25 pts earned!
+        </div>
+        
+        <!-- Header -->
+        <div class="text-center mb-8 bg-white border border-neutral-200 rounded-xl p-6 shadow-sm">
+            <h1 class="text-2xl font-semibold text-neutral-900 brand-font mb-2">⚖️ Delta-Neutral Builder</h1>
+            <p class="text-neutral-500 text-sm">Build delta-neutral funding arbitrage positions</p>
+        </div>
+        
+        <!-- Calculator -->
+        <div class="bg-white border border-neutral-200 rounded-xl p-6 shadow-sm">
+            <div class="space-y-4">
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Total Capital ($)</label>
+                        <input type="number" id="capital" placeholder="e.g., 10000" step="100" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Asset</label>
+                        <select id="asset" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900 bg-white">
+                            <option value="ETH">ETH</option>
+                            <option value="BTC">BTC</option>
+                            <option value="SOL">SOL</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Current Price ($)</label>
+                        <input type="number" id="price" placeholder="e.g., 2500" step="0.01" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Funding Rate (% per 8h)</label>
+                        <input type="number" id="funding-rate" placeholder="e.g., 0.05" step="0.001" value="0.03" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900">
+                    </div>
+                </div>
+                <div class="grid grid-cols-2 gap-4">
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Perp Trading Fee (%)</label>
+                        <input type="number" id="trading-fee" value="0.05" step="0.01" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900">
+                    </div>
+                    <div>
+                        <label class="block text-sm font-medium text-neutral-700 mb-2">Spot Swap Fee (%)</label>
+                        <input type="number" id="swap-fee" value="0.3" step="0.01" class="w-full px-4 py-2 border border-neutral-200 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-neutral-900">
+                    </div>
+                </div>
+                <button onclick="calculate()" class="w-full px-6 py-3 bg-blue-600 text-white rounded-lg font-semibold hover:bg-blue-700 transition-colors shadow-md shadow-blue-600/20">
+                    Build Delta-Neutral Position
+                </button>
+            </div>
+            
+            <!-- Results -->
+            <div id="results" class="hidden mt-6 pt-6 border-t border-neutral-200 space-y-4">
+                <div class="text-center p-6 bg-green-50 border border-green-200 rounded-xl">
+                    <div class="text-5xl font-bold text-green-600 mb-2" id="annual-yield">-</div>
+                    <div class="text-sm text-green-800">Estimated Annual Yield (Delta-Neutral)</div>
+                </div>
+                <div class="p-5 bg-white border-l-4 border-l-green-500 border border-neutral-200 rounded-lg">
+                    <div class="text-lg font-semibold text-neutral-900 mb-4 flex items-center gap-2">📈 Spot Position (Long)</div>
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div><span class="text-neutral-500">Amount:</span> <span class="text-neutral-900 font-medium" id="spot-amount">-</span></div>
+                        <div><span class="text-neutral-500">Value:</span> <span class="text-neutral-900 font-medium" id="spot-value">-</span></div>
+                        <div><span class="text-neutral-500">Entry Fee:</span> <span class="text-neutral-900 font-medium" id="spot-fee">-</span></div>
+                        <div><span class="text-neutral-500">Delta:</span> <span class="text-green-600 font-medium">+1.0</span></div>
+                    </div>
+                </div>
+                <div class="p-5 bg-white border-l-4 border-l-red-500 border border-neutral-200 rounded-lg">
+                    <div class="text-lg font-semibold text-neutral-900 mb-4 flex items-center gap-2">📉 Perp Position (Short)</div>
+                    <div class="grid grid-cols-2 gap-3 text-sm">
+                        <div><span class="text-neutral-500">Notional:</span> <span class="text-neutral-900 font-medium" id="perp-notional">-</span></div>
+                        <div><span class="text-neutral-500">Margin (1x):</span> <span class="text-neutral-900 font-medium" id="perp-margin">-</span></div>
+                        <div><span class="text-neutral-500">Entry Fee:</span> <span class="text-neutral-900 font-medium" id="perp-fee">-</span></div>
+                        <div><span class="text-neutral-500">Delta:</span> <span class="text-red-600 font-medium">-1.0</span></div>
+                    </div>
+                </div>
+                <div class="space-y-3">
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Net Delta</span>
+                        <span class="text-lg font-semibold text-green-600" id="net-delta">-</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Daily Funding Income</span>
+                        <span class="text-lg font-semibold" id="daily-funding">-</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Monthly Funding Income</span>
+                        <span class="text-lg font-semibold" id="monthly-funding">-</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Total Entry Costs</span>
+                        <span class="text-lg font-semibold" id="total-entry-costs">-</span>
+                    </div>
+                    <div class="flex items-center justify-between">
+                        <span class="text-neutral-600">Break-Even Time</span>
+                        <span class="text-lg font-semibold" id="breakeven-days">-</span>
+                    </div>
+                </div>
+                <div class="p-4 bg-orange-50 border border-orange-200 rounded-lg">
+                    <h4 class="text-orange-600 font-semibold mb-2">⚠️ Key Risks to Monitor</h4>
+                    <ul class="text-sm text-orange-800 space-y-1 list-disc list-inside">
+                        <li>Funding rate can flip negative (you pay instead of receive)</li>
+                        <li>Execution slippage when opening/closing positions</li>
+                        <li>Delta drift if positions become unbalanced</li>
+                        <li>Smart contract risk on both spot and perp venues</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
