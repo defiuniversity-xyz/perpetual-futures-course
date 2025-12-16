@@ -4,7 +4,6 @@ lesson_number: 9
 course: perpetual-futures
 ---
 
-
 ## 🎧 Lesson Podcast
 
 {% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-09/audio/lesson9_Funding_Rate_Arbitrage_Delta_Neutral_Farming.m4a" %}
@@ -94,13 +93,9 @@ Funding rates can be extremely profitable:
 - **Impact**: Loss of capital
 - **Mitigation**: Diversify across protocols, use audited platforms
 
-
 ![Delta-Neutral Strategy Diagram](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_09/pf09_01_delta_neutral_strategy_diagram.png)
 
-
-
 ![Arbitrage Risk Management Framework](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_09/pf09_04_arbitrage_risk_management_framework.png)
-
 
 ## 🔄 Strategy 2: Cash and Carry Basis Trade
 
@@ -148,9 +143,7 @@ Funding rates can be extremely profitable:
 - High execution costs
 - Illiquid markets
 
-
 ![Cash and Carry Flow](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_09/pf09_02_cash_and_carry_flow.png)
-
 
 ## 🌐 Strategy 3: Cross-Protocol Arbitrage
 
@@ -250,8 +243,6 @@ Funding rates can be extremely profitable:
 - On $500 perp: ~$2.40/day
 - After gas and fees: ~$2/day
 - Monthly: ~$60 (6% on $1,000)
-
-
 
 ![Funding Rate Arbitrage Opportunity Identification](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_09/pf09_03_funding_rate_arbitrage_opportunity_identification.png)
 
@@ -381,15 +372,11 @@ Use these calculators to plan your arbitrage strategies:
 
 **[Launch Funding Rate Calculator →](https://defi-university-app.web.app/interactives/perpetual-futures/funding-rate-calculator.html)**
 
-{% embed url="https://defi-university-app.web.app/interactives/perpetual-futures/funding-rate-calculator.html" %}
-
 ### Delta-Neutral Position Builder
 
 [![Delta Neutral Builder](images/interactives/delta-neutral-builder.png)](https://defi-university-app.web.app/interactives/perpetual-futures/delta-neutral-builder.html)
 
 **[Launch Delta Neutral Builder →](https://defi-university-app.web.app/interactives/perpetual-futures/delta-neutral-builder.html)**
-
-{% embed url="https://defi-university-app.web.app/interactives/perpetual-futures/delta-neutral-builder.html" %}
 
 ## 🔑 Key Takeaways
 

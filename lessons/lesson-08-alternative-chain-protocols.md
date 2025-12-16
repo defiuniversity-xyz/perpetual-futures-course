@@ -4,7 +4,6 @@ lesson_number: 8
 course: perpetual-futures
 ---
 
-
 ## 🎧 Lesson Podcast
 
 {% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-08/audio/lesson8_Finding_Your_Perfect_Decentralized_Perpetual_Protocol.m4a" %}
@@ -15,19 +14,13 @@ course: perpetual-futures
 
 # Lesson 8: Alternative Chain Protocols
 
-
-
 ![Chain-Specific Features Comparison](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_08/pf08_02_chain_specific_features_comparison.png)
-
-
 
 ![Protocol Comparison Matrix](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_08/pf08_01_protocol_comparison_matrix.png)
 
 ## 🎯 Core Concept: The Multi-Chain Perpetual Landscape
 
 The perpetual DEX ecosystem extends far beyond the major players. This lesson explores alternative protocols across different chains, each offering unique architectures, features, and trade-offs. Understanding these alternatives helps you choose the right protocol for your specific needs, chain preferences, and trading strategies.
-
-
 
 ![Protocol Selection Decision Tree](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_08/pf08_03_protocol_selection_decision_tree.png)
 
@@ -434,8 +427,6 @@ Use this tool to compare any perpetual DEX protocols side-by-side:
 [![Protocol Comparison Tool](images/interactives/protocol-comparison-tool.png)](https://defi-university-app.web.app/interactives/perpetual-futures/protocol-comparison-tool.html)
 
 **[Launch Protocol Comparison Tool →](https://defi-university-app.web.app/interactives/perpetual-futures/protocol-comparison-tool.html)**
-
-{% embed url="https://defi-university-app.web.app/interactives/perpetual-futures/protocol-comparison-tool.html" %}
 
 ## 🔑 Key Takeaways
 

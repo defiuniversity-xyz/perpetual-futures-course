@@ -24,8 +24,6 @@ This quiz tests your knowledge from Lessons 1-4:
 
 **[Take Module 1 Quiz →](https://defi-university-app.web.app/quizzes/perpetual-futures/module-01-quiz.html)**
 
-{% embed url="https://defi-university-app.web.app/quizzes/perpetual-futures/module-01-quiz.html" %}
-
 ---
 
 **Tip**: Review lessons 1-4 if you need a refresher before taking the quiz. Focus on the mathematics of funding rates, liquidation prices, and the differences between CLOB and oracle-based architectures.

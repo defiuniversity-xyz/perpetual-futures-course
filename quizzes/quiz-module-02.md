@@ -24,8 +24,6 @@ This quiz tests your knowledge from Lessons 5-8:
 
 **[Take Module 2 Quiz →](https://defi-university-app.web.app/quizzes/perpetual-futures/module-02-quiz.html)**
 
-{% embed url="https://defi-university-app.web.app/quizzes/perpetual-futures/module-02-quiz.html" %}
-
 ---
 
 **Tip**: Each protocol has unique strengths and risks. Pay attention to architecture differences (CLOB vs oracle pools), trust assumptions (bridges, validators), and best use cases for each protocol.

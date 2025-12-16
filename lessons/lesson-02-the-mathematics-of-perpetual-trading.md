@@ -4,7 +4,6 @@ lesson_number: 2
 course: perpetual-futures
 ---
 
-
 ## 🎧 Lesson Podcast
 
 {% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-02/audio/lesson2_Perpetual_Futures_Math_Your_Primary_Defense_Against_Losses.m4a" %}
@@ -38,9 +37,7 @@ $$Funding Rate = \frac{Perpetual Price - Spot Price}{Spot Price} \times Adjustme
 - **Negative Funding**: Perp < Spot → Shorts pay longs
 - **Adjustment Factor**: Varies by protocol (typically 0.01-0.1)
 
-
 ![Funding Rate Formula Visualization](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_02/pf02_01_funding_rate_formula_visualization.png)
-
 
 ### Calculating Funding Payments
 
@@ -78,9 +75,7 @@ $$Annualized Rate = Funding Rate \times Frequency \times 365$$
 
 **Warning**: Annualized funding rates above 50% are extremely expensive. Always check before opening positions.
 
-
 ![Annualized Funding Rate Impact Chart](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_02/pf02_05_annualized_funding_rate_impact_chart.png)
-
 
 ## 📊 Margin Requirements
 
@@ -124,9 +119,7 @@ $$Margin Ratio = \frac{Current Margin}{Position Size} \times 100\%$$
 - **Warning**: Margin Ratio 10-20%
 - **Danger**: Margin Ratio < 10% (approaching liquidation)
 
-
 ![Margin Ratio and Safety Zones Chart](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_02/pf02_03_margin_ratio_and_safety_zones_chart.png)
-
 
 ## ⚠️ Liquidation Price Calculations
 
@@ -177,9 +170,7 @@ $$Safety Buffer = \frac{Current Price - Liquidation Price}{Current Price} \times
 
 **Recommendation**: Maintain at least 20-30% safety buffer to avoid liquidation from normal volatility.
 
-
 ![Liquidation Price Calculation Diagram](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_02/pf02_02_liquidation_price_calculation_diagram.png)
-
 
 ## 🔢 Position Sizing Mathematics
 
@@ -247,9 +238,7 @@ $$P\&L = (Entry Price - Exit Price) \times Position Size - Fees - Funding Costs$
 - Net P&L: $400 - $5 + $24 = **$419**
 - ROI: $419 ÷ $2,000 = **20.95%**
 
-
 ![P&L Calculation Breakdown](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_02/pf02_04_pl_calculation_breakdown.png)
-
 
 ## 🎓 Beginner's Corner: Common Calculation Mistakes
 
@@ -363,23 +352,17 @@ Practice these calculations with our interactive tools:
 
 **[Launch Leverage Calculator →](https://defi-university-app.web.app/interactives/perpetual-futures/leverage-calculator.html)**
 
-{% embed url="https://defi-university-app.web.app/interactives/perpetual-futures/leverage-calculator.html" %}
-
 ### Funding Rate Calculator
 
 [![Funding Rate Calculator](images/interactives/funding-rate-calculator.png)](https://defi-university-app.web.app/interactives/perpetual-futures/funding-rate-calculator.html)
 
 **[Launch Funding Rate Calculator →](https://defi-university-app.web.app/interactives/perpetual-futures/funding-rate-calculator.html)**
 
-{% embed url="https://defi-university-app.web.app/interactives/perpetual-futures/funding-rate-calculator.html" %}
-
 ### P&L Calculator
 
 [![PnL Calculator](images/interactives/pnl-calculator.png)](https://defi-university-app.web.app/interactives/perpetual-futures/pnl-calculator.html)
 
 **[Launch PnL Calculator →](https://defi-university-app.web.app/interactives/perpetual-futures/pnl-calculator.html)**
-
-{% embed url="https://defi-university-app.web.app/interactives/perpetual-futures/pnl-calculator.html" %}
 
 ## 🔑 Key Takeaways
 

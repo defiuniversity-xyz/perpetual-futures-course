@@ -4,7 +4,6 @@ lesson_number: 6
 course: perpetual-futures
 ---
 
-
 ## 🎧 Lesson Podcast
 
 {% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-06/audio/lesson6_GMX_V2_Isolated_Pools_Risk_and_Fees.m4a" %}
@@ -184,19 +183,11 @@ GMX V2 solved critical limitations of V1:
 - Large trades that unbalance pool pay higher fees
 - Small trades or rebalancing trades pay lower fees
 
-
-
 ![GLP Token Mechanics](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_06/pf06_04_glp_token_mechanics.png)
-
-
 
 ![GMX V2 Fee Structure Breakdown](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_06/pf06_03_gmx_v2_fee_structure_breakdown.png)
 
-
-
 ![Oracle Pull vs Push Mechanism](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_06/pf06_02_oracle_pull_vs_push_mechanism.png)
-
-
 
 ![GMX V2 Pool Structure Diagram](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_06/pf06_01_gmx_v2_pool_structure_diagram.png)
 
@@ -388,8 +379,6 @@ GMX V2 solved critical limitations of V1:
 ## ⚖️ Compare Protocols
 
 See how GMX V2 compares to other perpetual DEXs:
-
-{% embed url="https://defi-university-app.web.app/interactives/perpetual-futures/protocol-comparison-tool.html" %}
 
 ## 🔑 Key Takeaways
 

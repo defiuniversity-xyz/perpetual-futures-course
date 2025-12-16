@@ -4,7 +4,6 @@ lesson_number: 7
 course: perpetual-futures
 ---
 
-
 ## 🎧 Lesson Podcast
 
 {% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-07/audio/lesson7_Drift_Protocol_Third_Generation_DeFi_Hybrid_Architecture.m4a" %}
@@ -23,7 +22,6 @@ Drift Protocol V2 represents a "third-generation" derivatives protocol that comb
 
 Drift's hybrid approach solves key problems:
 
-
 ![Drift vs Other Solana Perp DEXs](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_07/pf07_04_drift_vs_other_solana_perp_dexs.png)
 
 - **LP Protection**: JIT auction prevents toxic flow from hitting AMM first
@@ -32,9 +30,7 @@ Drift's hybrid approach solves key problems:
 - **MEV Internalization**: Value goes to traders, not arbitrageurs
 - **Cross-Margin**: Unified margin across spot, perps, lending, and prediction markets
 
-
 ![Drift Liquidity Trifecta Diagram](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_07/pf07_01_drift_liquidity_trifecta_diagram.png)
-
 
 ## 🏗️ The Liquidity Trifecta Architecture
 
@@ -162,9 +158,7 @@ Drift's cross-margin system is unique—it integrates:
 - No need to allocate margin per position
 - Better utilization of capital
 
-
 ![Drift Cross-Margin System](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_07/pf07_03_drift_cross_margin_system.png)
-
 
 ## 🎓 Beginner's Corner: Using Drift
 
@@ -297,8 +291,6 @@ Where:
 ## ⚖️ Compare Protocols
 
 See how Drift compares to other perpetual DEXs:
-
-{% embed url="https://defi-university-app.web.app/interactives/perpetual-futures/protocol-comparison-tool.html" %}
 
 ## 🔑 Key Takeaways
 

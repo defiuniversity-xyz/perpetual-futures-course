@@ -4,7 +4,6 @@ lesson_number: 5
 course: perpetual-futures
 ---
 
-
 ## 🎧 Lesson Podcast
 
 {% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-05/audio/lesson5_Hyperliquid_Speed_Trust_and_Hidden_Risks.m4a" %}
@@ -52,9 +51,7 @@ HyperBFT is Hyperliquid's custom consensus algorithm derived from HotStuff proto
 
 **Why This Matters**: For market makers managing delta-neutral portfolios, 200ms is the difference between capturing a spread and suffering toxic flow. This performance allows automated strategies from CEXs to operate with minimal modification.
 
-
 ![HyperBFT Consensus Flow](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_05/pf05_02_hyperbft_consensus_flow.png)
-
 
 ## 🔄 Dual-State Architecture: HyperCore and HyperEVM
 
@@ -114,9 +111,7 @@ In HyperCore, matching is a native primitive—stripped of overhead, enabling sp
 
 **Example**: A vault contract on HyperEVM can programmatically execute a trade on HyperCore CLOB in response to an on-chain trigger.
 
-
 ![Hyperliquid Architecture Overview](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_05/pf05_01_hyperliquid_architecture_overview.png)
-
 
 ## ⚡ Zero-Gas Trading Model
 
@@ -152,11 +147,7 @@ Without gas as Sybil resistance, Hyperliquid uses sophisticated rate limiting:
 - After buffer depleted: Must generate trading volume
 - Spammers get throttled to 1 request per 10 seconds
 
-
-
 ![Session Keys and Security Model](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_05/pf05_04_session_keys_and_security_model.png)
-
-
 
 ![HLP Vault Mechanics Diagram](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_05/pf05_03_hlp_vault_mechanics_diagram.png)
 
@@ -379,8 +370,6 @@ The HLP vault is Hyperliquid's unified liquidity pool that:
 ## ⚖️ Compare Protocols
 
 See how Hyperliquid stacks up against other perpetual DEXs:
-
-{% embed url="https://defi-university-app.web.app/interactives/perpetual-futures/protocol-comparison-tool.html" %}
 
 ## 🔑 Key Takeaways
 

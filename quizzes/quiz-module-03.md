@@ -26,8 +26,6 @@ This quiz tests your knowledge from Lessons 9-12:
 
 **[Take Module 3 Quiz →](https://defi-university-app.web.app/quizzes/perpetual-futures/module-03-quiz.html)**
 
-{% embed url="https://defi-university-app.web.app/quizzes/perpetual-futures/module-03-quiz.html" %}
-
 ---
 
 **Tip**: Advanced strategies require understanding both the opportunities (funding arbitrage, delta-neutral positions) and the risks (funding rate flips, cross-margin contagion, protocol-specific risks). Professional traders succeed through systematic frameworks, not luck.

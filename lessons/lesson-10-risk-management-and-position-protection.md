@@ -4,7 +4,6 @@ lesson_number: 10
 course: perpetual-futures
 ---
 
-
 ## 🎧 Lesson Podcast
 
 {% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-10/audio/lesson10_Structured_Risk_Management_for_DeFi_Leverage.m4a" %}
@@ -14,8 +13,6 @@ course: perpetual-futures
 {% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-10/video/lesson10_Trading_s_Unseen_Enemy.mp4" %}
 
 # Lesson 10: Risk Management and Position Protection
-
-
 
 ![Risk Management Framework](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_10/pf10_01_risk_management_framework.png)
 
@@ -98,8 +95,6 @@ Most traders lose money not because of bad trades, but because of:
 - Never use cross margin for correlated positions
 - Monitor portfolio health factor
 
-
-
 ![Stop Loss Placement Guide](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_10/pf10_03_stop_loss_placement_guide.png)
 
 ### Mistake 4: Chasing the Liquidity Mirage
@@ -117,9 +112,7 @@ Most traders lose money not because of bad trades, but because of:
 - Red flag: High volume, tiny OI (wash trading)
 - Test liquidity with small orders first
 
-
 ![Common Trading Mistakes Visual Guide](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_10/pf10_04_common_trading_mistakes_visual_guide.png)
-
 
 ## 🛡️ Liquidation Prevention Strategies
 
@@ -190,9 +183,7 @@ Most traders lose money not because of bad trades, but because of:
 
 **Effect**: Lowers liquidation price, increases buffer
 
-
 ![Liquidation Prevention Strategies](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_10/pf10_02_liquidation_prevention_strategies.png)
-
 
 ## 🔒 Systemic Risk Protection
 
@@ -395,8 +386,6 @@ Use this interactive checklist before opening any position:
 [![Risk Assessment Checklist](images/interactives/risk-assessment-checklist.png)](https://defi-university-app.web.app/interactives/perpetual-futures/risk-assessment-checklist.html)
 
 **[Launch Risk Assessment Checklist →](https://defi-university-app.web.app/interactives/perpetual-futures/risk-assessment-checklist.html)**
-
-{% embed url="https://defi-university-app.web.app/interactives/perpetual-futures/risk-assessment-checklist.html" %}
 
 ## 🔑 Key Takeaways
 

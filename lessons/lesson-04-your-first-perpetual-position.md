@@ -4,7 +4,6 @@ lesson_number: 4
 course: perpetual-futures
 ---
 
-
 ## 🎧 Lesson Podcast
 
 {% embed url="https://storage.googleapis.com/perpetual-futures-media/lesson-04/audio/lesson4_Perpetual_Trading_First_Trade_Safety_Checklist.m4a" %}
@@ -76,9 +75,7 @@ Ask yourself:
    - More liquidity = better execution
    - Check TVL and open interest
 
-
 ![Protocol Selection Framework](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_04/pf04_04_protocol_selection_framework.png)
-
 
 ## 🌐 Step 2: Wallet Setup and Network Configuration
 
@@ -326,13 +323,9 @@ Ask yourself:
 - [ ] Liquidation price checked?
 - [ ] Have 20-30% buffer?
 
-
 ![Position Setup Flowchart](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_04/pf04_01_position_setup_flowchart.png)
 
-
-
 ![Pre-Trade Checklist](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_04/pf04_02_pre_trade_checklist.png)
-
 
 ## ⚡ Step 7: Execute and Monitor
 
@@ -357,9 +350,7 @@ Ask yourself:
 - **Swing Trading**: Check daily
 - **Never**: Set and forget (always monitor)
 
-
 ![Position Monitoring Dashboard Mockup](https://storage.googleapis.com/perpetual-futures-gitbook-images/lessons/lesson_04/pf04_03_position_monitoring_dashboard_mockup.png)
-
 
 ### When to Close
 
@@ -505,8 +496,6 @@ Ask yourself:
 ## 🛠️ Calculate Your Position
 
 Use this calculator to plan your first position:
-
-{% embed url="https://defi-university-app.web.app/interactives/perpetual-futures/leverage-calculator.html" %}
 
 ## 🔑 Key Takeaways
 
